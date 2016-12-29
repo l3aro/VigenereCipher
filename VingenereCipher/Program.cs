@@ -10,6 +10,11 @@ namespace VingenereCipher
     {
         static void Main(string[] args)
         {
+            VingenereCipher vc = new VingenereCipher();
+            string temp = vc.Encrypt("Hoai");
+            Console.WriteLine(temp);
+
+            Console.ReadKey();
         }
     }
 }
