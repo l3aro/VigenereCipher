@@ -14,6 +14,11 @@ namespace VingenereCipher
             string temp = vc.Encrypt("cipher");
             Console.WriteLine(temp);
 
+            temp = vc.Decrypt(temp);
+
+            Console.WriteLine(temp);
+
+
             Console.ReadKey();
         }
     }
