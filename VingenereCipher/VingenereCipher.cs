@@ -17,33 +17,38 @@ namespace VingenereCipher
 
         public string Encrypt(string raw)
         {
-            string str = raw.ToUpper(); //chane text to upper case
+            string fillString = raw.ToUpper(); //chane text to upper case
 
-            for (int i = str.Length; i < key.Length; i++)
+            for (int i = fillString.Length; i < key.Length; i++)
             {
-                str += str[(i % raw.Length)];
+                fillString += fillString[(i % raw.Length)];
             }
 
-            return str;
 
-            //// bind string into an array of bytes
-            //byte[] toAlphabetNumber = Encoding.ASCII.GetBytes(raw);
 
-            //for (int index = 0; index < toAlphabetNumber.Length; index++)
-            //{
-            //    byte token = (byte)(toAlphabetNumber[index] - 65); // minus by 65 to back to Alphabet code context
+            // bind string into an array of bytes
+            byte[] fillData = Encoding.ASCII.GetBytes(fillString);
+            byte[] keyData = Encoding.ASCII.GetBytes(key);
 
-            //    token = (byte)((a * token + b) % 26);
+            for (int index = 0; index < fillString.Length; index++)
+            {
+                byte fillToken = (byte)(fillData[index] - 65); // minus by 65 to back to Alphabet code context
+                byte keyToken = (byte)(keyData[index] - 65); // minus by 65 to back to Alphabet code context
 
-            //    token += 65; // plus by 65 to back to ASCII character
+                byte sumToken = (byte)(fillToken + keyToken);
 
-            //    toAlphabetNumber[index] = token;
-            //}
+                if (sumToken > 25)
+                    sumToken -= 26;
+                sumToken += 65; // plus by 65 to back to ASCII character
 
-            //// bind array into a string
-            //string result = Encoding.ASCII.GetString(toAlphabetNumber);
 
-            //return result;
+                fillData[index] = sumToken;
+            }
+
+            // bind array into a string
+            string result = Encoding.ASCII.GetString(fillData);
+
+            return result;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace VingenereCipher
         static void Main(string[] args)
         {
             VingenereCipher vc = new VingenereCipher();
-            string temp = vc.Encrypt("Hoai");
+            string temp = vc.Encrypt("cipher");
             Console.WriteLine(temp);
 
             Console.ReadKey();
