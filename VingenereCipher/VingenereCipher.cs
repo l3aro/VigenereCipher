@@ -17,11 +17,38 @@ namespace VingenereCipher
             }
         }
 
+        // Remove characters not in Z26 alphabet
+        public string RemoveNonZ26(string raw)
+        {
+            raw = raw.ToUpper();
+            do
+            {
+                int i = 0;
+                for (; i < raw.Length; i++)
+                {
+                    int ch = (int)raw[i];
+                    if (ch < 65 || ch > 90)
+                    {
+                        raw = raw.Remove(i, 1);
+                        break;
+                    }
+                }
+                if (i == raw.Length)
+                {
+                    break;
+                }
+            }
+            while (true);
+
+            return raw;
+
+        }
+
         public string Encrypt(string raw, string keyword)
         {
+            raw = RemoveNonZ26(raw);
+            keyword = RemoveNonZ26(keyword);
             rawLength = raw.Length;
-            raw = raw.ToUpper();
-            keyword = keyword.ToUpper();
 
             // fill length
             if (raw.Length > keyword.Length)
@@ -41,9 +68,6 @@ namespace VingenereCipher
                 }
             }
             
-
-
-
             // bind string into an array of bytes
             byte[] rawData = Encoding.ASCII.GetBytes(raw);
             byte[] keyData = Encoding.ASCII.GetBytes(keyword);
@@ -71,8 +95,8 @@ namespace VingenereCipher
 
         public string Decrypt(string encrypted, string keyword)
         {
-            encrypted = encrypted.ToUpper();
-            keyword = keyword.ToUpper();
+            encrypted = RemoveNonZ26(encrypted);
+            keyword = RemoveNonZ26(keyword);
 
             // fill length
             if (encrypted.Length > keyword.Length)
